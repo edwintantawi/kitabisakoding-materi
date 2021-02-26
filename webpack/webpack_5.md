@@ -130,3 +130,140 @@ ini akan membingugkan dan memakan banyak waktu.
 pada video selanjutnya kita akan mulai mengimplementasikan webpack ke studi kasus sebelum itu kita juga akan belajar mengenai javascript export import.
 
 ## Part 3 [ Instalasi webpack & javascript import export ]
+
+Hallo semua, selamat datang di channel KitaBisaKoding.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah melihat studi kasus yang akan kita kerjakan di playlist ini, kita juga sudah membagi file javascript menjadi beberapa file.
+
+sekarang kita akan menggunakan webpack di studi kasus kita sebelumnya.
+
+sebelum itu pastikan di komputer teman teman sudah terinstall javascript package manager baik itu npm untuk npm secara kalau kita menginstall nodejs npm juga ikut terinstall atau kalau terbiasa menggunakan yarn bisa pakai yarn. di sini saya menggunakan npm. cara ceknya cukup ketikan di terminal:
+
+"npm --v"
+
+jika muncul verisinya, maka npm sudah bisa di gunakan.
+
+sekarang di terminal pastikan pathnya mengarah ke root project kita ini.
+
+kalau kita pakai terminal dari vscode, itu otomatis akan di arahkan ke direktori yg sesuai
+
+yang pertama kita lakukan adalah melakukan "npm init" untuk menginisialisasikan npm di project ini. caranya cukup jalankan perintah "npm init -y" agar cepat saya gunakan flag y agar semua di isi secara default.
+
+jika kita jalanakan maka kita akan mendapatkan file baru bernama package.json,
+isinya ada informasi mengenai project kita.
+
+selanjutnya kita akan menginstall webpack.
+untuk menginstall webpack kita memerlukan 2 module yang akan kita install yaitu:
+
+webpack dan webpack-cli,
+
+cara menginstallya cukup dengan
+"npm install --save-dev webpack webpack-cli"
+
+karena nantinya webpack dan webpack cli hanya kita gunakan waktu proses development, dan tidak akan dibawa ke tahap production, maka kita menambahkan flag --save-dev agar di install pada devDependency.
+
+webpack yang kita install ini sebagai core atau inti dari webpacknya, lalu webpack-cli gunanya agar kita dapat menjalankan perintah yang ada pada webpack di command line kita tau terminal kita.
+
+jika kita enter maka webpack dan webpack-cli akan di install. pastikan untuk terkoneksi ke internet.
+
+jika sudah, kita bisa lihat ke file package.json kita,
+muncul object baru bernama devDependency isinya ada webpack dan webpack-cli beserta versinya yang kita install tadi. di sini versi webpack saya 5.24.2 saat video ini dibuat.
+
+lalu ada juga file package-lock.json dan folder node_module yang beisi module yang kita install.
+
+sekarang kita akan menggunakan webpack kita, caranya cukup mudah kita cukup memanggil perintah "webpack" di terminal kita. atau kita bisa meletakan perintahnya di script package.json agar kita lebih mudah memanggilnya berulang.
+
+kita letak perintahnya di file package.json lalu di dalam object script, untuk test ini bisa kita hapus karena ga kita gunakan,
+
+lalu kita isi dengan
+"start" : "webpack"
+
+dengan begini kita bisa menjalankan di terminal dengan perintah
+"npm start"
+
+kita coba jalankan, ini kita akancoba webpack tanpa konfigurasi apaun alias default dari webpacknya, kedepannya kita akan memberikan konfigurasi kita sendiri.
+
+jika kita jalankan,
+
+maka akan muncul banyak error dan warning, jika kira scroll ke atas,
+di sini npm start kita menjalankan perintah webpack,
+
+lalu ada warning in configuration,
+mode option has not been set
+
+ini karena kita tidak memberikan konfigurasi mode pada webpacknya, maka akan di alihkan ke mode production,
+di webpack ada 2 mode yaitu production dan development, di video kedepan juga akan kita bahas.
+
+di bawahnya kita mendapat error:
+Module not found: Error: Can't resolve './src'
+
+di sini dikatakan tidak di jumpai module pada folder './src'
+jika kita lihat struktur folder kita kita tidak memiliki module apapun di folder src, hanya 3 buah folder.
+
+secara default webpack akan menjadi module javascript pada folder './src'
+module yang akan di jalankan webpack pertama kali ini kita sebut sebagai entry point.
+
+coba kita ikuti, kita pindahkan module main.js kita ke folder './src' karena main.js ini tempat awal jalannya program kita.
+
+dan kita harus mengubah nama dari main.js menjadi index.js agar terbaca oleh webpack
+
+setelah kita pindahkan dan rename, kita jalankan ulang
+"npm start"
+
+sekarang sudah tidak ada error lagi, hanya tersisa warning tadi nanti akan kita perbaiki.
+
+kita sudah bisa menjalankan dan menggunakan webpack, walau hanya sebatas menjalankannya langsung tanpa konfigurasi.
+
+jika kita lihat kita di buatkan folder baru bernama dist atau singkatakan dari distribution, di dalamnya terdapat main.js yang di buatkan webpack, jika kita buka isinya hanya pemanggilan fungsi getPokemon(); seperti pada index.js kita.
+
+karena cara kerja dari webpack yang kita bahas pada video pertama,
+webpack akan mentracking atau memantau ketergantungan antar module si sini kita hanya memanggil fungsi getPokemon() dan memberitahuan menggunakan fungsi getPokemon() dari module mana.
+
+cara kita dapat menggunakan import export module javascript.
+
+caranya kita bisa memberikan "export" di depan variabel ataupun fungsi yang nantinya akan digunakan atau di import di module lain.
+
+jika kita lihat di api.js ada fungsi getPokemon() yang mana akan digunakan di index.js kita, maka kita harus melakukan export, dengan menambahkan export di depan fungsinya,
+
+sebenarnya ada 2 cara untuk melakukan export di javascript, pertama denga keyword export lalu dengan export default, untuk perbedaannya teman teman bisa explore sendiri di internet, di sini saya akan mengguakan keyword export
+
+selanjutnya pada endpoint.js ada variabel yang akan di pakai di api.js
+maka kita perlu mengexportnya denga menambahkan keyword export di depan,
+
+selanjutnya pada insert.js ada variabel list, vaiabel ini tidak di pakai di module lain, karena hanya di pakai di fungsi ini, lalu ada fungsi getPokemonDetail(), fungsi ini digunakan di api.js maka kita perlu mengexportnya
+
+sekarang kita bisa import module ke setiap module yang membutuhkan module lain,
+
+pertama di index.js kita memerlukan fungsi getPokemon() dari api.js
+
+cara mengimportnya kita tuliskan keyword import di paling atas javascript kita,
+lalu diikuti kurung kurawal {} berisi nama fungsi yang kita export, di api.js kita mengexport fungsi getPokemon, lalu "form" lalu lokasi dari module yang akan kita import, di sini api.js kita berada di folder script lalu api.js,
+
+kita akan lakukan ke api.js
+import { API_END_POINT } from './endpoint.js';
+karena kita memerlukan variabel API_END_POINT
+
+import { getPokemonDetail } from './insert.js';
+lalu fungsi getPokemonDetail
+
+sekarang semua module kita sudah saling terhubung.
+
+sekarang coba kita jalankan,
+"npm start"
+
+tidak ada error, kita lihat ke main.js di folder dist, sekarang sudah berisi javascript yang telah dibuatkan oleh webpack, susah untuk terbaca karena sudah di minify karena webpack mode kita berada di tahap production.
+
+jika kita cek di browser,
+maka tidak tampil apapun, karena pada index.html kita masih mengaikan ke main.js di lokasi lama kita, sedangkan yang harusnya kita gunakan hasil dari webpack di folder dist,
+
+sekarang kita rubah ke main.js di folder dist, kita juga cukup 1x saja memanggil main.js tanpa perlu memanggil yang lainnya
+
+<script src="./dist/main.js"></script>
+
+sekarang html kita sudah menggunakan javascript yang di buatkan oleh webpack,
+jika kita cek di browser
+
+sekarang semua bekerja dengan normal dengan menggunakan javascript hasil dari webpack.
+
+selamat kita sudah berhasil menggunakan webpack dengan zero configuration atau tanpa konfigurasi sama sekali,
+
+di video selanjutnya kita akan memberikan konfigurasi pada webpack kita, memberikan loader dan plugins agar webpack kita semakin powerfull.
