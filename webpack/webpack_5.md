@@ -250,7 +250,7 @@ sekarang semua module kita sudah saling terhubung.
 sekarang coba kita jalankan,
 "npm start"
 
-tidak ada error, kita lihat ke main.js di folder dist, sekarang sudah berisi javascript yang telah dibuatkan oleh webpack, susah untuk terbaca karena sudah di minify karena webpack mode kita berada di tahap production.
+tidak ada error, kita lihat ke main.js di folder dist, sekarang sudah berisi javascript yang telah dibuatkan oleh webpack , susah untuk terbaca karena sudah di minify karena webpack mode kita berada di tahap production.
 
 jika kita cek di browser,
 maka tidak tampil apapun, karena pada index.html kita masih mengaikan ke main.js di lokasi lama kita, sedangkan yang harusnya kita gunakan hasil dari webpack di folder dist,
@@ -267,3 +267,64 @@ sekarang semua bekerja dengan normal dengan menggunakan javascript hasil dari we
 selamat kita sudah berhasil menggunakan webpack dengan zero configuration atau tanpa konfigurasi sama sekali,
 
 di video selanjutnya kita akan memberikan konfigurasi pada webpack kita, memberikan loader dan plugins agar webpack kita semakin powerfull.
+
+## Part 4 [ Konfigurasi Webpack ]
+
+Hallo semua, selamat datang di channel KitaBisaKoding.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita menerapkan webpack di studi kasus kita dengan konfigurasi webpack default. Sekarang kita akan membuat dan menggunakan Konfigurasi yang kita buat sendiri untuk digunakan oleh webpack.
+
+Cara membuat konfigurasi webpack, kita bisa buat file baru dengan nama
+"webpack.config.js" di root project kita.
+
+nantinya semua konfigurasi akan kita letakan di file ini.
+
+cara menuliskan konfigurasinya, kita wajip melakukan export sebuah object yang berisi konfigurasi kita dengan menggunakan module.exports, module.exports ini mirip seperti export di javascript yang kita pernah buat sebelumnya, tapi module.exports ini digunakan pada enviroment nya si nodejs. lalu yang kita export adalah sebuah object,
+
+ada banyak konfigurasi yang bisa kita masukan ke object ini. Kita akan bahas satu persatu.
+
+yang pertama kita bisa mengatur entrypoint webpack kita, entrypoint ini sebagai lokasi titik awalnya webpack akan menelusuri keterkaitan antar module agar di buatkan dependency graph. pada beberapa video sebelumnya secara default entry point ini akan mencari file/module javascript dengan nama index.js di dalam folder src.
+
+cara menerapkannya kita cukup memberikan key value di dalam object.
+"entry:" dengan value lokasi dari file yg akan dijadikan sebagai entrypoint. di sini saya akan berikan lokasi nya ke index.js pada folder src sama seperti defaultnya.
+
+"entry: './src/index.js'"
+
+berikutnya kita bisa mengkonfigurasi output dari webpack.
+jika kita perhatian sebelumnya jika kita menjalankan webpack, maka webpack akan menghasilkan output berupa folder dist dan berisi hasil dari proses webpack.
+
+sekarang kita bisa mengatur itu, dengan menambahkan konfigurasi output, caranya kita bisa tambahkan lagi key value pada object,
+dengan key "output" lalu kita bisa memberikan value berupa object lagi, di dalam object ini kita bisa berikan beberapa konfigurasi untuk output,
+pertama kita bisa memberikan penamaan untuk hasil file yang di bundle oleh webpack, jika sebelumnya kita mendapatkan file javascript bernama main.js sekarang kita dapat menggantinya sesuka kita. dengan memberikan "filename" dengan value berisi string nama file yg kita inginkan, contohnya saya akan buat dengan nama 'main.bundle.js'
+
+setelah filename kita juga bisa mengatur di mana output akan di keluarkan, secara default webpack akan mengeluarkan output berupa folder dist di root project kita,
+kita bisa merubahnya sesuai keinginan kita, caranya kita bisa menambahkan pasangan key value lagi di object output,
+
+dengan key "path" lalu kita bisa berikan value berupa lokasi nya, yang perlu di perhatikan di sini, pada output path kita ga bisa menggunakan relative path seperti pada entrypoint jika kita coba menggunakan relative path, contohnya saya berikan "./dist" jika kita jalankan maka akan muncul error, dan mengharuskan kita menggunakan absolute path.
+
+caranya kita bisa menggunakan module path, dengan cara melakukan import module path ke webpack.config.js kita.
+dengan "const path = require('path')" module path ini sendiri ga perlu kita install karena sudah ada ketika kita menginstall nodejs.
+
+sekarang kita bisa memanfaatkan module path ini dengan cara
+path.resolve(\_\_dirname, 'dist'),
+
+kita menggunakan fungsi resolve dari module path lalu kita berikan dua parameter yg pertama **dirname. **dirname ini akan merujuk pada direktori kita sekarang, lalu kita berikan string sebagai parameter kedua sebagai nama folder yang akan di gunakan, biasanya kita bisa beri nama dist atau build jika pada reactjs. kita coba berikan nama "build" sebagai pembeda dari setting default.
+
+jika kita jalankan npm start,
+
+di terminal tidak ada error, sekarang kita dibuatkan sebuah folder baru bernama build seperti yang kita buat pada konfigurasi webpacknya, dan didalamnya ada file javascript bernama main.bundle.js yg juga kita konfigurasi sebelumnya isinya tetapa sama seperti sebelumnya, sekarang kita bisa hapus folder dist, karena kita akan memakai penamaan build, jika kita tes web kita ini ga akan jalan ya, karena kita harus ubah lagi pemanggilan javascript kita yang sebelumnya mengambil file main.js di folder dist, sekarang kita alihkan ke main.bundle.js di folder build.
+
+jika kita coba buka di browser, maka web kita berjalan normal.
+
+Kalau kita lihat di terminal dari pertama sertiap kali kita jalankan, ada satu warning yang peringati kita kalau kita belum memberikan konfigurasi mode pada webpack kita, dan secara default webpack akan menggunakan mode production.
+
+sekarang coba kita hilangkan peringatan ini dengan cara memberikan konfigurasi mode di webpack.config.js kita.
+
+dibawah output kita bisa berikan pasangan key value berupa mode, dengan value berupa string antara production atau development, kita coba berikan production, ini konfigurasi yang akan di gunakan webpack kita sebelumnya jika kita tidak memberikan mode.
+kita coba jalnakan npm start, maka warning kita sebelumnya sudah tidak ada lagi,
+
+jadi apa gunanya mode ini, jika kita lihat hasil webpack kita di main.bundle.js,
+isinya berupa file javascript yang dibundle oleh webpack, lalu javscript kita juga di minify menjadi satu baris. jika kita lihat di vscode jumlah barisnya 1, ini kelihatan banyak karena textnya kalau melebihi layar akan di wrap ke bawah, lalu jika kita meletakan komentar, komentarnya juga akan di hilangkan. maksud dari mode production ini, untuk membuat bundle yang siap untuk dibawa ke tahap production, tahap ini nanti file yang di hasilkan ini sudah siap langsung dunakan baik itu di hosting/deploy. makanya hasil dari webpack dengan mode production susah untuk dibaca, di minify, dan menghilangkan komentar yang ada untuk menekan ukuran file yang besar.
+
+selain production ada mode development, untuk mode ini digunakan untuk tahap development ataup tahap dimana kita masih mengerjakan project ini, jika kita ganti modenya menjadi mode development, lalu kita jalankan npm start.
+
+kita lihat lagi ke main.bundle.js sekarang isi dari main.bundle.js kita lebih banyak dari sebelumnya, dan ga di minify. jadi kita dipermudah memahami kode ini untuk proses debuging. di sini kita bisa lihat logic dari webpack pada code kita. yg paling bawah ini code punyanya si webpack.
