@@ -328,3 +328,15 @@ isinya berupa file javascript yang dibundle oleh webpack, lalu javscript kita ju
 selain production ada mode development, untuk mode ini digunakan untuk tahap development ataup tahap dimana kita masih mengerjakan project ini, jika kita ganti modenya menjadi mode development, lalu kita jalankan npm start.
 
 kita lihat lagi ke main.bundle.js sekarang isi dari main.bundle.js kita lebih banyak dari sebelumnya, dan ga di minify. jadi kita dipermudah memahami kode ini untuk proses debuging. di sini kita bisa lihat logic dari webpack pada code kita. yg paling bawah ini code punyanya si webpack.
+
+untuk mempermudah proses devlopment kita, kita juga bisa menmbah 1 konfigurasi lagi yaitu devtool, kita cukup menambahkannya setelah mode kita, dengan key "devtool" lalu valuenya ada beberapa konfigurasi yang bisa kita gunakan, kita bisa cek langsung ke dokumentasinya, linknya nanti akan saya taruh di deskripsi.
+
+di dokumentasinya kita bisa lihat value apa aja yang bisa kita gunakan, lalu ada deskripsi kegunaannya, di sini ada yang bisa di gunakan di mode production juga.
+
+kita akan coba pakai soure-map, kita jalankan ulang, jika kita lihat di folder build kita bertambah satu file lagi ini file sourcemap untuk file main.bundle.js kita, dan di main.bundle.js kita formatnya beda lagi dari sebelumnya.
+
+teman teman boleh coba coba explorasi tes devtool yg tersedia.
+
+masih banyak lagi konfigurasi yang dapat kita berikan, pada video selanjutnya kita akan mengenal loader untuk menagani berkas css kita.
+
+## Part 5 [ CSS Loader & Style Loader untuk CSS ]
