@@ -59,7 +59,6 @@ jika kita coba buka project ini di browser..., di sini saya pakai google chrome.
 pastikan teman teman terhubung ke internet karena kita menggunakan bootstrap cdn dan kita juga ada melakukan fetch api.
 
 Jika kita lihat di sini kita punya navbar dari bootstrap dengan logo, dan ini juga sudah responsive, hamburger menunya juga berjalan normal karena kita juga menggunakan bootstrap js dan kawan kawannya,
-dibawah navbar ada gambar dari background image di css, lalu ada divider atau pembatas berbentuk wave ya atau gelombang dan ini gambar vektor atau svg.
 
 dan dibawahnya ada list gambar dan nama pokemon, yang kita dapatkan dari api pokeAPI di javascript kita.
 
@@ -262,7 +261,7 @@ sekarang kita rubah ke main.js di folder dist, kita juga cukup 1x saja memanggil
 sekarang html kita sudah menggunakan javascript yang di buatkan oleh webpack,
 jika kita cek di browser
 
-sekarang semua bekerja dengan normal dengan menggunakan javascript hasil dari webpack.
+dan semua bekerja dengan normal dengan menggunakan javascript hasil dari webpack.
 
 selamat kita sudah berhasil menggunakan webpack dengan zero configuration atau tanpa konfigurasi sama sekali,
 
@@ -340,3 +339,52 @@ teman teman boleh coba coba explorasi tes devtool yg tersedia.
 masih banyak lagi konfigurasi yang dapat kita berikan, pada video selanjutnya kita akan mengenal loader untuk menagani berkas css kita.
 
 ## Part 5 [ CSS Loader & Style Loader untuk CSS ]
+
+Hallo semua, selamat datang di channel KitaBisaKoding.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah membuat konfigurasi webpack kita sendiri,
+
+pada video kali ini kita akan menggunakan loader, pada beberapa video sebelumnya kita sudah menyinggung mengenai loader.
+
+dimana fungsi loader ini untuk memungkinkan webpack mengolah file jenis lain diluar javascript, kalau plugins sendiri dapat kita gunakan untuk optimisasi, pengolahan asset, dan lainnya. sebelumnya webpack kita hanya menagani file javascript kita.
+di video ini kita akan gunakan loader untuk menangani file css kita.
+
+kita perlu menginstall terlebih dahulu loader yang kita butuhkan sebelum kita menggunakan.
+untuk css kita perlu 2 loader yaitu css-loader dan style-loader, kedua loader ini punya fungsi nya masing masing,
+
+cara menginstallnya cukup
+
+"npm install --save-dev css-loader style-loader"
+kita akan instal kedua loader ini ada css-loader dan style-loader,
+
+sekarang jika sudah terinstall, sekarang kita bisa terapkan loader ini di webpack config kita.
+
+cara menambahkan loader, kita bisa menmabahkan key value
+module, dengan value object lagi,
+
+di dalam object module kita tambahkan rules, dengan value berupa array. Didalam array ini kita bisa menerapkan loader loader kita,
+
+caranya kita perlu memberikan object, di dalam object ini akan kita letakan konfigurasi loader untuk css kita.
+yang pertama kita butuhkan adalah memberitaukan ke webpack file apa saja yang akan di di proses oleh webpack dengan loader ktia,
+dengan key test lalu valuenya kita bisa menggunakan regex. kita bisa tulisakan /\.css$/i dengan begini kita memilih semua file dengan extensi akhiran css tanpa memperhatikan case sensitive.
+
+berikutnya kita berikan key "use" dengan value nama loader yang akan digunakan, karena kita akan menggunakan 2 loader untuk css kita, kita akan letakan ke sebuah array.
+
+di dalamnya kita bisa masukan nama nama loadernya ['style-loader','css-loader'], yang perlu kita ingat untuk pemanggilan urutan loader juga berpengaruh, webpack akan menggunakan loader satu persatu dari urutan terakhir atau yg paling kanan, di sini kita buat style loader lalu css loader,
+
+sekarang apa gunanya kedua loader ini, yang pertama css loader, css loader digunakan untuk mengubah dan memasukan css menjadi javascript,
+nanti semua css kita akan menjadi satu dengan javascript.
+
+lalu setelah css-loader selesai di jalankan, style-loader akan di jalankan, fungsi dari style loader ini untuk memasukan/inject css yang ada pada javascript kita yang hasil dari css-loader ke DOM atau html kita.
+
+sebelum kita jalankan ada 1 hal lagi yang perlu kita lakukan, kita perlu mengimport css kita ke javascript. kita akan import di index.js
+import './style/style.css';
+
+lalu kita dapat menghapus link css kita yang di index.html.
+
+sekarang jika kita jalankan "npm start" maka jika kita lihat pada browser, semua berjalan normal, css nya semua berjalan. lalu jika kita inspect element, dibagian head html kita ada tag style yang berisi css kita, padahal kita tidak ada membuatnya, ini karena peran dari style loader yang menginject css kita ke DOM html dengan tag style.
+
+sekarang jika kita balik, lihat ke bundle javascript kita, di sini kita bisa lihat css kita ada di sini, ini hasil dari css-loader yang kita gunakan.
+
+kita sudah bisa menangai css dengan webpack, di video selanjutnya kita akan belajar gimana menagani sass pada webpack dengan sass-loader.
+
+## Part 6 [ sass-loader untuk SASS ]
