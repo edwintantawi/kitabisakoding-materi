@@ -390,7 +390,9 @@ kita sudah bisa menangai css dengan webpack, di video selanjutnya kita akan bela
 ## Part 6 [ sass-loader untuk SASS ]
 
 Hallo semua, selamat datang di channel KitaBisaKoding.
-Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah menggunakan css-loader dan style-loader untuk menangani berkas css kita dengan webpack. selanjutnya di video ini kita akan menangani berkas sass atau pun scss jika kita menggunakan sass/scss di project kita. jika hanya css, css-loader dan style-loader sudah cukup. sekarang kita akan coba bagaimana jika kita menggunakan sass atau scss.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah menggunakan css-loader dan style-loader untuk menangani berkas css kita dengan webpack.
+
+selanjutnya di video ini kita akan menangani berkas sass atau pun scss jika kita menggunakan sass/scss di project kita. jika hanya css, css-loader dan style-loader sudah cukup. sekarang kita akan coba bagaimana jika kita menggunakan sass atau scss.
 
 sebelumnya kita punya hanya berkas style, sekarang coba kita ganti jadi scss.
 lalu kita ganti juga yang ada di index.js menjadi style.scss
@@ -420,3 +422,66 @@ jika kita coba jalankan, maka ga ada error lagi, dan jika kita lihat di browser,
 sekarang kita sudah bisa menangani berkas sasss/scss di project kita, selanjutnya kita akan menggunakan babel pada webpack kita.
 
 ## Part 7 [ Babel untuk Javascript ]
+
+Hallo semua, selamat datang di channel KitaBisaKoding.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah menggunakan sass-loader untuk menangani berkas sass/scss pada studi kasus kita.
+
+selanjutnya kita akan menggunakan babel untuk studi kasus kita.
+
+buat yang belum tau apa itu babel, Babel merupakan sebuah transpiler yang bertugas untuk mengubah sintaks JavaScript modern (ES6+) menjadi sintaks yang dapat didukung penuh oleh seluruh browser.
+
+jadi kita tak perlu khawatir styntax javascript terbaru yang kita pakai, dengan babel kita bisa pastikan javscript kita bisa dijalankan hampir ke semua versi browser.
+
+Untuk menggunakan babel pada webpack sebagai loader, kita perlu memasang beberapa package.
+
+langsung aja kita install
+"npm install --save-dev @babel/core babel-loader @babel/preset-env"
+
+Package @babel/core merupakan package inti dari babel
+
+babel-loader ini sebagai loader pada webpack
+
+dan package @babel/preset-env merupakan package preset yang akan kita gunakan untuk membantu babel-loader dalam melakukan tugasnya.
+
+jika sudah kita install, kita bisa memasang babel ini di konfigurasi webpack kita.
+
+karena kita menangani jenis file ynag berbeda denga loader yang berbeda dari berkas css/sass/scss, kita bisa buat object baru untuk babel kita di dalan array rules
+
+kita lakukan hal yang sama seperti pada css/sass kita kita bisa letakan test, karena kita akan menerapkan babel pada berkas javascript maka kita bisa menuliskan regex untuk memilih berkas dengan extensi js
+
+selanjutnya kita perlu mengecualikan folder atau file agar tidak di eksekusi oleh babel, contohnya di sini kita punya folder node_modules, kita ga perlu menggunakan babel untuk semua yang ada di dalam folder node_modules ini. jadi kita bisa kecualikan folder ini denga menambahkan
+
+exclude: "/node_modules/",
+
+dengan begini babel ga akan bekerja ke folder yang kita exclude.
+
+selanjutnya kita perlu kasih tau ke webpack apa yang akan kita gunakan, dengan use
+lalu valuenya berupa array.
+di dalamnya kita akan letakan object karena kita ga cuma menuliskan nama loader yang akan di pakai, melainkan kita juga akan memberikan pengaturan babel kita di sini.
+
+yang pertama kita bisa terapkan loader nya, kita menggunakan babel-loader
+lalu kita bisa menambahkan options, di dalam option kita bisa mengatur presets, kita akan memakai presets yang sudah kita instal yaitu @babel/preset-env
+
+sebelum kita jalankan, mari kita lihat bundle javascript yang sebelumnya tanpa menggunakan babel, di sini kita bisa lihat kita menggunakan syntax javascript ES6, ada const, dan arrow function. sekarang jika kita jalankan
+"npm start"
+
+kita lihat lagi di javascript bundle kita, sekarang keyword const sudah menjadi var, arrow function kita sekarang menjadi function biasa. kalau ada const di sini, ini const dari webpack nya sendiri
+
+jika kita jalankan di browser, ternyata pokemon kita ga ada yang muncul, kita lihat di console... terdapat error regenerator runtime is not define.
+
+ini karena jika pada javascript kita terdapat async/await dan menerapkan babel-loader pada webpack,
+kita perlu menambahkan sebuah package lagi yaitu regenerator-runtime
+
+cari installnya
+
+npm install regenerator-runtime
+
+lalu pada entry point kita, di index.js di paling atas kita tambahkan
+import 'regenerator-runtime'
+
+sekarang jika kita jalankan ulang "npm start",
+lalu kita coba lihat di browser, harusnya sudah tidak ada error lagi.
+
+sekarang semua sudah berjalan normal, kita sudah menerapkan babel pada webpack kita.
+
+di video selanjutnya kita akan mulai menggunakan plugins untuk webpack kita agar semakin powerfull.
