@@ -388,3 +388,35 @@ sekarang jika kita balik, lihat ke bundle javascript kita, di sini kita bisa lih
 kita sudah bisa menangai css dengan webpack, di video selanjutnya kita akan belajar gimana menagani sass pada webpack dengan sass-loader.
 
 ## Part 6 [ sass-loader untuk SASS ]
+
+Hallo semua, selamat datang di channel KitaBisaKoding.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah menggunakan css-loader dan style-loader untuk menangani berkas css kita dengan webpack. selanjutnya di video ini kita akan menangani berkas sass atau pun scss jika kita menggunakan sass/scss di project kita. jika hanya css, css-loader dan style-loader sudah cukup. sekarang kita akan coba bagaimana jika kita menggunakan sass atau scss.
+
+sebelumnya kita punya hanya berkas style, sekarang coba kita ganti jadi scss.
+lalu kita ganti juga yang ada di index.js menjadi style.scss
+
+jika kita jalankan "npm start"
+
+maka akan muncul error, karena webpack belum mengenal berkas sass atau scss kita, yang kita perlukan sekarang adalah loader yang tepat untuk berkas scss atau sass kita.
+
+yang perlu kita install adalah sass-loader dan sass
+"npm install --save-dev sass-loader sass"
+
+sass-loader ini sebagai loader untuk membuat webpack kita mengenali berkas sass/scss, lalu kita juga perlu menginstall sass, sass ini nantinya berguna untuk mengcompile berkas sass/scss kita menjadi css.
+
+setelah kita instal sass dan sass-loader kita perlu menerapkannya di webpack config kita.
+
+kita bisa merubah test kita yang sebelumnya css menjadi sass atau scss dengan regex yang baru
+/\.s[ac]ss$/i
+
+dengan begini, kita bisa memilih semuah file dengan extensi akhiran sass mupun scss.
+
+selanjutnya kita perlu menambahkan loader lagi di array use kita, kita tambahkan sass-loader
+
+pastikan sass-loader kita letakan di posisi paling kananatau akhir, agar sass-loader pertama kali di jalankan, nantinya sass-loader akan mengcompile atau merubah berkas scss atau sass kita menjadi css, lalu css-loader akan mengubah css hasil dari sass-loader kita ke dalan javascript, lalu style-loader akan menginject css yang ada di javascript ke DOM html kita.
+
+jika kita coba jalankan, maka ga ada error lagi, dan jika kita lihat di browser, semua style berjalan normal.
+
+sekarang kita sudah bisa menangani berkas sasss/scss di project kita, selanjutnya kita akan menggunakan babel pada webpack kita.
+
+## Part 7 [ Babel untuk Javascript ]
