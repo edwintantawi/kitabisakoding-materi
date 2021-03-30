@@ -485,3 +485,25 @@ lalu kita coba lihat di browser, harusnya sudah tidak ada error lagi.
 sekarang semua sudah berjalan normal, kita sudah menerapkan babel pada webpack kita.
 
 di video selanjutnya kita akan mulai menggunakan plugins untuk webpack kita agar semakin powerfull.
+
+## Part 8 [ Cache Busting & HTML Webpack Plugins ]
+
+Hallo semua, selamat datang di channel KitaBisaKoding.
+Pada video ini kita akan melanjutkan playlist ini yang membahas mengenai webpack 5, di video sebelumnya kita sudah menggunakan Babel loader untuk membuat kode javascript kita lebih kompetible hampit ke semua jenis dan versi browser dari yang lawas hingga yang terbaru.
+
+Selanjutnya.. kita pasti pernah mengalami masalah ketika pernah mendeploy web kita di hosting dan sudah ada beberapa user yang menggunakan. lalu kita memberikan perubahan misalnya pada styling di css kita lalu kita update website kita di hosting. Ketika user kita sebelumnya masuk lagi ke website kita, user kadang tidak dapat melihat perubahan styling yang kita berikan. kenapa?
+
+secara normal web browser yang di gunakan oleh user website kita akan akan melakukan cache terhadap asset(assets di sini seperti image atau css dan lainnya) yang ada di website kita, ini bukan masalah karena gunanya browser melakukan cache tersebut agar ketika user igin mengakses kembali website tersebut yang pernah di kunjungi sebelumnya, aksesnya akan lebih cepat karena. ketika kita mengakses sebuah website dan mengirimkan request ke server, browser melihat request yang kita lakukan pada domain tersebut ada tersimpan di cache maka browser akan menggunakan assets yang ada di cache browser nya.
+
+kita bisa contohkan di dalah satu website, jika kita lihat di tab network, lalu kita refresh maka di bagian size ada beberapa assets yang bertuliskan "disk cache" ini menandakan assets yang di gunakan ketika kita mengakses kembali website ini menggunakan assets dari cache pada browser kita,
+
+itulah kenapa terkadang perubahan yang kita lakukan tidak langsung terlihat, karena browser akan menggunakan assets yang terlah di cache terlebih dahulu jika tersedia. sekarang bagaimana kita mengatasi hal ini? cara yg cukup simple, kita harus memberitahuan user website kita untuk melakukan hard refresh (ctrl + f5) atau membersihkan cache browser mereka.
+
+kalau kita coba lihat kembali ke contoh website yang menggunakan cache browser kita, lalu kita lakukan hard refresh "ctrl + f5", maka di bagian size akan bertulisakan size assets yang kita terima langsung dari server dan bukan dari cache browser kita.
+
+alih alih kita menyuruh user website kita untuk membersihkan cache mereka, kita bisa menerapkan metode cache busting di webpack kita.
+
+konsepnya cukup mudah, kita tau browser akan menggunakan cache yang tersedia jika assets yang di request sama dengan yang ada di cache.
+maka yang bisa kita lakukan, kita bisa mengganti nama file kita setiap mengalami perubahan. hmmmm... namun ini akan cukup melelahkan. jangan khawatir, dengan webpak kita bisa memanfaatkan fitur hash di webpack.
+
+caranya cukup mudah, kita bisa ke konfigurasi webpack kita. kita contohkan untuk bundle javascript kita di bagian output kita bisa menambahkan di dalam value filename [hash] maka nanti di sini akan di tuliskan hash dari file itu sendiri. jika kita jalankan "npm start" lalu kita cek di folder build akan muncul javascript bundle kita dengan nama yang panjang karena kita tambahkan hash di namanya, ini yang hebatnya dari hash, jika tidak ada perubahan pada file tersebut maka hash nya akan tetap dan tidak berubah, jika sekarang kita lakukan "npm start" kembali, maka tidak ada perubahan karena isi file tersebut nya tetap sama maka hash nya juga tetap, tetapi jika kita coba lakukan perubahan di file tersebut, contoh di sini kitat tambahkan console.log(), maka webpack akan mengenerate bundle baru dengan hash yang berbeda dr sebelumnya, hash ini yang akan kita manfaatkan untuk melakukan cache busting atau menghilangkan effect caching pada browser ketika web kita mengalami perubahan.
